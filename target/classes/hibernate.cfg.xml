@@ -10,7 +10,7 @@
         <property name="hibernate.connection.password">root</property>
 
         <!-- Schema generation settings -->
-        <property name="hbm2ddl.auto">update</property> <!-- or 'create', 'create-drop' depending on your needs -->
+        <property name="hbm2ddl.auto">create</property> <!-- or 'create', 'create-drop' depending on your needs -->
 
         <!-- Echo SQL to stdout -->
         <property name="show_sql">true</property>

@@ -1,9 +1,7 @@
 package com.codex.model;
 
-import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 public class Laptop {
@@ -13,24 +11,16 @@ public class Laptop {
     private int id;
     private String lname;
 
-    @ManyToMany
-    private List<Student> students = new ArrayList<Student>();
+    @ManyToOne
+    private Alien alien;
 
     @Override
     public String toString() {
         return "Laptop{" +
                 "id=" + id +
                 ", lname='" + lname + '\'' +
-                ", students=" + students +
+                ", alien=" + alien +
                 '}';
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     public int getId() {
@@ -47,5 +37,13 @@ public class Laptop {
 
     public void setLname(String lname) {
         this.lname = lname;
+    }
+
+    public Alien getAlien() {
+        return alien;
+    }
+
+    public void setAlien(Alien alien) {
+        this.alien = alien;
     }
 }

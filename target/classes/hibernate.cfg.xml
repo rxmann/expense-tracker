@@ -5,25 +5,21 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 
         <!-- Schema generation settings -->
-        <property name="hbm2ddl.auto">create</property> <!-- or 'create', 'create-drop' depending on your needs -->
+        <property name="hbm2ddl.auto">update</property> <!-- or 'create', 'create-drop' depending on your needs -->
 
         <!-- Echo SQL to stdout -->
         <property name="show_sql">true</property>
 
-        <!-- Format SQL -->
-<!--        <property name="format_sql">true</property>-->
-
         <!-- Cache settings -->
-<!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->
-<!--        <property name="hibernate.cache.use_query_cache">true</property>-->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.JCacheRegionFactory</property>
+        <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property>
 
-        <!-- Mapping files -->
-        <!-- <mapping resource="path/to/your/MappingFile.hbm.xml"/> -->
-        <!-- Alternatively, you can use annotations or JPA -->
     </session-factory>
 </hibernate-configuration>

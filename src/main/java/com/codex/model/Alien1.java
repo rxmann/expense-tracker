@@ -1,8 +1,8 @@
 package com.codex.model;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
 
 
 @Entity

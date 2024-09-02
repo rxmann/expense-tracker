@@ -1,7 +1,7 @@
 package com.codex.model;
 
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.*;
 
 @Embeddable
 public class AlienName {

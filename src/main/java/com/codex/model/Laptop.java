@@ -1,7 +1,7 @@
 package com.codex.model;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Laptop {

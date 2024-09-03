@@ -1,6 +1,7 @@
 package com.codex;
 
 import com.codex.model.hqlmodel.Student;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -29,7 +30,15 @@ public class Main {
         //************************** QUERY HERE ********************************************************************
 
         // Query using HQL
-        Query<Object[]> query2 = session.createQuery("SELECT s.rollno, s.name, s.marks FROM Student s", Object[].class);
+
+        // Get One Statement
+        Query<Object[]> query3 = session.createQuery("SELECT s.rollno, s.name, s.marks FROM Student s WHERE s.rollno = 9", Object[].class);
+        Object[] stdRes = query3.uniqueResult();
+        System.out.println(stdRes[0] + " : " + stdRes[1] + " : " + stdRes[2]);
+
+
+        // Get All statement
+        Query<Object[]> query2 = session.createQuery("SELECT s.rollno, s.name, s.marks FROM Student s where marks >= 90", Object[].class);
 
         List<Object[]> stds = query2.list();
         for (Object[] std: stds) {
@@ -38,6 +47,24 @@ public class Main {
             Integer marks = (Integer) std[2];
             System.out.printf("Name: %s | Roll No: %d | Marks: %d\n", name, rollno, marks);
         }
+
+        // Patch statement
+        String hql_patch = "UPDATE Student set marks = :newMarks where rollno = :rollNumber";
+        Query<?> query=  session.createQuery(hql_patch);
+        query.setParameter("newMarks", 99);
+        query.setParameter("rollNumber", 9);
+
+        Integer res = query.executeUpdate();
+        System.out.println(res);
+
+
+        // CustomSQL
+        Query<Student> squery = session.createNativeQuery("select * from student where marks = 99", Student.class);
+        Student stt = squery.uniqueResult();
+        System.out.println(stt);
+
+
+
 
         //**********************************************************************************************************
         session.getTransaction().commit();

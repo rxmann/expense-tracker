@@ -11,25 +11,19 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
-    private String bio;
-    private int age;
-    private double weight;
+    private String password;
+    private String email;
 
+    public User() {
 
-
-    public User(String name, int age, double weight) {
-        this.name = name;
-        this.age = age;
-        this.weight = weight;
     }
 
-    public User(String name, String bio, int age, double weight) {
+    public User(String name, String password, String email) {
         this.name = name;
-        this.bio = bio;
-        this.age = age;
-        this.weight = weight;
+        this.password = password;
+        this.email = email;
     }
 
     @Override
@@ -37,10 +31,17 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", bio='" + bio + '\'' +
-                ", age=" + age +
-                ", weight=" + weight +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -51,27 +52,19 @@ public class User {
         this.name = name;
     }
 
-    public String getBio() {
-        return bio;
+    public String getPassword() {
+        return password;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

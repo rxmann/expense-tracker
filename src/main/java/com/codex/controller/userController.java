@@ -34,15 +34,6 @@ public class UserController {
         return service.getUsers();
     }
 
-    @PostMapping("/load-users")
-    public void loadUsers () {
-        for (int i=0; i<4; i++) {
-            String name = "Name "  + i+1;
-            User user = new User(name, name, name+"@gmail.com");
-            service.addUser(user);
-        }
-    }
-
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser (@PathVariable int userId) {
         boolean deleted = service.deleteUser(userId);

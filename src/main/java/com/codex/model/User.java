@@ -1,19 +1,19 @@
 package com.codex.model;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="users")
+@Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -23,8 +23,12 @@ public class User {
     private String password;
     private String email;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Expense> expenses = new ArrayList<Expense>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value="user-expense")
+    private List<Expense> expenses;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonManagedReference(value = "user-category")
+    private List<Category> categories;
 
 }

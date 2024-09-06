@@ -1,7 +1,8 @@
 package com.codex.model;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,10 +29,14 @@ public class Expense {
     @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = true )
+    @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false )
+    @JsonBackReference(value="user-expense")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = true)
+    private Category category;
 
 
     @PrePersist

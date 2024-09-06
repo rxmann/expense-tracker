@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping
     public User createUser (@RequestBody User user) {
-        System.out.println(user);
         return service.createUser(user);
     }
 
@@ -36,11 +35,21 @@ public class UserController {
         return service.getUsers();
     }
 
+    @PatchMapping
+    public ResponseEntity<?> updateUser (@RequestParam Long userId, @RequestBody User user) {
+        User updatedUser = service.updateUser(userId, user);
+        if (updatedUser.getId()  != null) {
+            return ResponseEntity.ok().body(updatedUser);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser (@PathVariable int userId) {
         boolean deleted = service.deleteUser(userId);
         if (deleted) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }

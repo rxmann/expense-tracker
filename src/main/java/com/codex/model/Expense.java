@@ -30,12 +30,11 @@ public class Expense {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="user_id", referencedColumnName = "id", nullable = false )
+    @JsonBackReference(value="user-expense")
     private User user;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = true)
     private Category category;
 

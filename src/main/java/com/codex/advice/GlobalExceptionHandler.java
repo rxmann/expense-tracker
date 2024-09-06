@@ -1,10 +1,7 @@
 package com.codex.advice;
 
 
-import com.codex.exceptions.CategoryNotFoundException;
-import com.codex.exceptions.CustomErrorResponse;
-import com.codex.exceptions.ExpenseNotFoundException;
-import com.codex.exceptions.UserNotFoundException;
+import com.codex.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +26,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ExpenseNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> handleExpenseNotFoundException(CategoryNotFoundException exp) {
         return new ResponseEntity<>(new CustomErrorResponse(exp.getMessage(), HttpStatus.NOT_FOUND.value(), LocalDateTime.now()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<CustomErrorResponse> handleInvalidRequestException (InvalidRequestException exp) {
+        return new ResponseEntity<>(new CustomErrorResponse(exp.getMessage(), HttpStatus.BAD_REQUEST.value(), LocalDateTime.now()), HttpStatus.BAD_REQUEST);
     }
 
 

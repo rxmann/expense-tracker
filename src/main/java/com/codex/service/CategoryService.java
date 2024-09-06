@@ -25,6 +25,7 @@ public class CategoryService {
     }
 
     public Category createCategory(Category category) {
+        System.out.println(category);
         return repo.save(category);
     }
 

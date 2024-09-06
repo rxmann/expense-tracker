@@ -1,6 +1,9 @@
 package com.codex.controller;
 
 
+import com.codex.DTO.ExpenseDTO;
+import com.codex.exceptions.ExpenseNotFoundException;
+import com.codex.exceptions.InvalidRequestException;
 import com.codex.model.Expense;
 import com.codex.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,15 @@ public class ExpenseController {
     private ExpenseService service;
 
     @PostMapping
-    public Expense createExpense (@Validated @RequestBody Expense expense) {
-        return service.createExpense(expense);
+    public Expense createExpense (@RequestBody ExpenseDTO expenseDTO) {
+        System.out.println(expenseDTO);
+        if (expenseDTO.getUserId() == null) {
+            throw new InvalidRequestException("The request body needs a userId field.");
+        }
+        if (expenseDTO.getCategoryId() == null) {
+            throw new InvalidRequestException("The request body needs a categoryId field.");
+        }
+        return service.createExpense(expenseDTO);
     }
 
     @GetMapping
@@ -36,12 +46,13 @@ public class ExpenseController {
     }
 
     @PatchMapping
-    public ResponseEntity<Expense> updateExpense (@RequestParam int expenseId, @RequestBody Expense expense) {
-        boolean updated = service.updateExpense(expenseId, expense);
-        if (updated) {
-            return ResponseEntity.ok().build();
+    public ResponseEntity<Expense> updateExpense (@RequestParam int expenseId, @Validated @RequestBody ExpenseDTO expenseDTO) {
+
+        Expense updatedExpense = service.updateExpense(expenseId, expenseDTO);
+        if (updatedExpense.getId() != null) {
+            return ResponseEntity.ok(updatedExpense);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping

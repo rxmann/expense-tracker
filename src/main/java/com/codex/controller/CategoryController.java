@@ -46,8 +46,8 @@ public class CategoryController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteExpense (@RequestParam int expenseId) {
-        boolean deleted = service.deleteExpense(expenseId);
+    public ResponseEntity<?> deleteExpense (@RequestParam int catId) {
+        boolean deleted = service.deleteExpense(catId);
         if (deleted) {
             return ResponseEntity.noContent().build();
         }

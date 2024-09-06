@@ -25,11 +25,8 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "user-category")
     private User user;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Expense> expenses;
 
 }

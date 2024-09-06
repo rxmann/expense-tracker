@@ -3,7 +3,6 @@ package com.codex.service;
 import com.codex.model.User;
 import com.codex.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class UserService {
         return repo.save(user);
     }
 
-    public Optional<User> getOneUser(int userId) {
+    public Optional<User> getOneUser(long userId) {
         return repo.findById(userId);
     }
 
@@ -32,7 +31,7 @@ public class UserService {
     }
 
 
-    public boolean deleteUser (int userId) {
+    public boolean deleteUser (long userId) {
         if (repo.existsById(userId)) {
             repo.deleteById(userId);
             return true;

@@ -1,13 +1,14 @@
 package com.codex.controller;
 
+import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.service.UserService;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,7 @@ public class UserController {
 
     @PostMapping
     public User createUser (@RequestBody User user) {
+        System.out.println(user);
         return service.createUser(user);
     }
 
@@ -26,7 +28,7 @@ public class UserController {
     public ResponseEntity<User> getUser (@PathVariable int userId) {
         return service.getOneUser(userId)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new UserNotFoundException("No such user exists!"));
     }
 
     @GetMapping

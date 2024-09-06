@@ -1,8 +1,9 @@
 package com.codex.controller;
 
 
+import com.codex.model.Category;
 import com.codex.model.Expense;
-import com.codex.service.ExpenseService;
+import com.codex.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,32 +13,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/expenses")
-public class ExpenseController {
+@RequestMapping("/categories")
+public class CategoryController {
 
     @Autowired
-    private ExpenseService service;
+    private CategoryService service;
 
     @PostMapping
-    public Expense createExpense (@Validated @RequestBody Expense expense) {
-        return service.createExpense(expense);
+    public Category createCategory (@Validated @RequestBody Category category) {
+        return service.createCategory(category);
     }
 
     @GetMapping
-    public List<Expense> getAllExpenses () {
-            return service.getALlExpenses();
+    public List<Category> getAllCategories () {
+        return service.getALlCategories();
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Expense> getOneExpense (@PathVariable int userId) {
-        return service.getOneExpense(userId)
+    @GetMapping("/{catId}")
+    public ResponseEntity<Category> getOneCategory (@PathVariable int catId) {
+        return service.getOneCategory(catId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PatchMapping
-    public ResponseEntity<Expense> updateExpense (@RequestParam int expenseId, @RequestBody Expense expense) {
-        boolean updated = service.updateExpense(expenseId, expense);
+    public ResponseEntity<Category> updateCategory (@RequestParam int expenseId, @RequestBody Category category) {
+        boolean updated = service.updateCategory(expenseId, category);
         if (updated) {
             return ResponseEntity.ok().build();
         }

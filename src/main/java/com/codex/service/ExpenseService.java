@@ -20,7 +20,7 @@ public class ExpenseService {
     }
 
 
-    public Optional<Expense> getOneExpense(int userId) {
+    public Optional<Expense> getOneExpense(long userId) {
         return repo.findById(userId);
     }
 
@@ -29,7 +29,7 @@ public class ExpenseService {
         return repo.save(expense);
     }
 
-    public boolean deleteExpense(int expenseId) {
+    public boolean deleteExpense(long expenseId) {
 
         if (repo.existsById(expenseId)) {
             repo.deleteById(expenseId);
@@ -39,7 +39,7 @@ public class ExpenseService {
 
     }
 
-    public boolean updateExpense(int expenseId, Expense newExpense) {
+    public boolean updateExpense(long expenseId, Expense newExpense) {
 
         Optional<Expense> optionalExpense = repo.findById(expenseId);
         if (optionalExpense.isPresent()) {
@@ -51,6 +51,9 @@ public class ExpenseService {
             }
             else if (newExpense.getAmount() != null) {
                 exp.setAmount(newExpense.getAmount());
+            }
+            else if (newExpense.getCategory() != null) {
+                exp.setCategory(newExpense.getCategory());
             }
             repo.save(exp);
             return true;

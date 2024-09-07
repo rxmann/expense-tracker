@@ -1,5 +1,6 @@
 package com.codex.service;
 
+import com.codex.DTO.UserDTO;
 import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.repo.UserRepo;
@@ -19,8 +20,16 @@ public class UserService {
         return repo.save(user);
     }
 
-    public Optional<User> getOneUser(long userId) {
-        return repo.findById(userId);
+    public UserDTO getOneUser(long userId) {
+        Optional<User> optionalUser = repo.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User not found!");
+        }
+        User user = optionalUser.get();
+
+        return new UserDTO(user);
+
     }
 
 

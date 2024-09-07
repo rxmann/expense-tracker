@@ -5,6 +5,7 @@ import com.codex.DTO.ExpenseDTO;
 import com.codex.exceptions.ExpenseNotFoundException;
 import com.codex.exceptions.InvalidRequestException;
 import com.codex.model.Expense;
+import com.codex.model.User;
 import com.codex.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,13 @@ public class ExpenseController {
     public List<Expense> getAllExpenses () {
             return service.getALlExpenses();
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Expense>> getUsersExpenses (@PathVariable int userId) {
+        List<Expense> expenses = service.getUsersExpenses(userId);
+        return ResponseEntity.ok(expenses);
+    }
+
 
     @GetMapping("/{expId}")
     public ResponseEntity<Expense> getOneExpense (@PathVariable int expId) {

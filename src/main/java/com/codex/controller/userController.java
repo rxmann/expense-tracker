@@ -1,5 +1,6 @@
 package com.codex.controller;
 
+import com.codex.DTO.UserDTO;
 import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.service.UserService;
@@ -24,10 +25,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser (@PathVariable int userId) {
-        return service.getOneUser(userId)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new UserNotFoundException("No such user exists!"));
+    public ResponseEntity<UserDTO> getUser (@PathVariable int userId) {
+        UserDTO userDTO = service.getOneUser(userId);
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping
@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<?> updateUser (@RequestParam Long userId, @RequestBody User user) {
         User updatedUser = service.updateUser(userId, user);
         if (updatedUser.getId()  != null) {
-            return ResponseEntity.ok().body(updatedUser);
+            return ResponseEntity.ok(updatedUser);
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }

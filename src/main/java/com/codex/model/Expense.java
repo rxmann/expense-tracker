@@ -1,9 +1,10 @@
 package com.codex.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,11 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Description is required!")
     private String description;
-    @Column(nullable = false)
+
+    @NotNull(message = "Amount is required!")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be positive!")
     private Double amount;
 
     @Column(name="created_at", nullable = false)

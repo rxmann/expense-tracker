@@ -38,6 +38,18 @@ public class ExpenseService {
     }
 
 
+    public List<Expense> getUsersExpenses(long userId) {
+        Optional<User> optionalUser = userRepo.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User not found!");
+        }
+
+        return optionalUser.get().getExpenses();
+    }
+
+
+
+
     public Expense createExpense(@RequestBody ExpenseDTO expenseDTO) {
 
         Expense expense = new Expense();

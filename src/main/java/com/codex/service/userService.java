@@ -1,8 +1,10 @@
 package com.codex.service;
 
+import com.codex.DTO.UserDTO;
 import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.repo.UserRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,24 @@ public class UserService {
     @Autowired
     private UserRepo repo;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public User createUser(User user) {
         return repo.save(user);
     }
 
-    public Optional<User> getOneUser(long userId) {
-        return repo.findById(userId);
+    public UserDTO getOneUser(long userId) {
+        Optional<User> optionalUser = repo.findById(userId);
+
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User not found!");
+        }
+        User user = optionalUser.get();
+
+
+        return modelMapper.map(user, UserDTO.class);
+
     }
 
 

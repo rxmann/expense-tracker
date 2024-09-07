@@ -4,6 +4,7 @@ import com.codex.DTO.UserDTO;
 import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.repo.UserRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class UserService {
 
     @Autowired
     private UserRepo repo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public User createUser(User user) {
         return repo.save(user);
@@ -28,7 +32,8 @@ public class UserService {
         }
         User user = optionalUser.get();
 
-        return new UserDTO(user);
+
+        return modelMapper.map(user, UserDTO.class);
 
     }
 

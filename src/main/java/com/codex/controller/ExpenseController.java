@@ -38,9 +38,9 @@ public class ExpenseController {
             return service.getALlExpenses();
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Expense> getOneExpense (@PathVariable int userId) {
-        return service.getOneExpense(userId)
+    @GetMapping("/{expId}")
+    public ResponseEntity<Expense> getOneExpense (@PathVariable int expId) {
+        return service.getOneExpense(expId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }

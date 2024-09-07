@@ -1,6 +1,7 @@
 package com.codex.service;
 
 
+import com.codex.exceptions.CategoryNotFoundException;
 import com.codex.model.Category;
 import com.codex.repo.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class CategoryService {
     }
 
 
-    public Optional<Category> getOneCategory(long catId) {
-        return repo.findById(catId);
+    public Category getOneCategory(long catId) {
+        Optional<Category> optionalCategory = repo.findById(catId);
+        if (optionalCategory.isEmpty()) {
+            throw new CategoryNotFoundException();
+        }
+        return optionalCategory.get();
     }
 
     public Category createCategory(Category category) {
@@ -39,16 +44,18 @@ public class CategoryService {
 
     }
 
-    public boolean updateCategory(long catId, Category newCat) {
+    public Category updateCategory(long catId, Category newCat) {
 
         Optional<Category> optionalCategory = repo.findById(catId);
-        if (optionalCategory.isPresent()) {
-
-            Category exp = optionalCategory.get();
-
-            repo.save(exp);
-            return true;
+        if (optionalCategory.isEmpty()) {
+            throw new CategoryNotFoundException();
         }
-        return false;
+        Category cat = optionalCategory.get();
+
+        if (newCat.getName() != null) {
+            cat.setName(newCat.getName());
+        }
+
+        return repo.save(cat);
     }
 }

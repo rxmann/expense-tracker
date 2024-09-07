@@ -1,9 +1,11 @@
 package com.codex.controller;
 
 
+import com.codex.exceptions.InvalidRequestException;
 import com.codex.model.Category;
 import com.codex.model.Expense;
 import com.codex.service.CategoryService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,18 +33,14 @@ public class CategoryController {
 
     @GetMapping("/{catId}")
     public ResponseEntity<Category> getOneCategory (@PathVariable int catId) {
-        return service.getOneCategory(catId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        Category cat = service.getOneCategory(catId);
+        return ResponseEntity.ok(cat);
     }
 
     @PatchMapping
-    public ResponseEntity<Category> updateCategory (@RequestParam int expenseId, @RequestBody Category category) {
-        boolean updated = service.updateCategory(expenseId, category);
-        if (updated) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<Category> updateCategory (@RequestParam int catId, @RequestBody Category category) {
+        Category updatedCategory = service.updateCategory(catId, category);
+        return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping

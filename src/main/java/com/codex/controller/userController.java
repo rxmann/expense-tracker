@@ -1,10 +1,8 @@
 package com.codex.controller;
 
 import com.codex.DTO.UserDTO;
-import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
 import com.codex.service.UserService;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

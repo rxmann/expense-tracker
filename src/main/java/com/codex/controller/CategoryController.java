@@ -1,11 +1,8 @@
 package com.codex.controller;
 
 
-import com.codex.exceptions.InvalidRequestException;
 import com.codex.model.Category;
-import com.codex.model.Expense;
 import com.codex.service.CategoryService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

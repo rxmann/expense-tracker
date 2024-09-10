@@ -6,6 +6,7 @@ import com.codex.model.User;
 import com.codex.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +19,15 @@ public class UserService {
     private UserRepo repo;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private ModelMapper modelMapper;
 
-    public User createUser(User user) {
-        return repo.save(user);
+    public UserDTO registerUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User newUser = repo.save(user);
+        return modelMapper.map(newUser, UserDTO.class);
     }
 
     public UserDTO getOneUser(long userId) {
@@ -31,7 +37,6 @@ public class UserService {
             throw new UserNotFoundException("User not found!");
         }
         User user = optionalUser.get();
-
 
         return modelMapper.map(user, UserDTO.class);
 

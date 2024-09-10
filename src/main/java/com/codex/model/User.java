@@ -28,6 +28,8 @@ public class User {
     @Email(message = "Should be a valid email!")
     @NotBlank(message = "Email is required!")
     private String email;
+    @NotBlank(message = "Role must be configured!")
+    private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value="user-expense")

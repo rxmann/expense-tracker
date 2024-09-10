@@ -1,4 +1,4 @@
-package com.codex.config;
+package com.codex.security;
 
 import com.codex.exceptions.UserNotFoundException;
 import com.codex.model.User;
@@ -38,9 +38,10 @@ public class MyUserDetailsService implements UserDetailsService {
         if (role == null || role.isEmpty() || role.equalsIgnoreCase("USER")) {
             return new String[]{"USER"};
         }
-        else {
+        else if (role.contains("ADMIN")) {
             return new String[]{"USER", "ADMIN"};
         }
+        return new String[]{"USER"};
     }
 
 }

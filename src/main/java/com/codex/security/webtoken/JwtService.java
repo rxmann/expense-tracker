@@ -1,5 +1,6 @@
-package com.codex.webtoken;
+package com.codex.security.webtoken;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class JwtService {
 
     private static final String SECRET_KEY = "32DF1A433A2EB38FBE9321972A2343D4BED73960AEDAC565E0E01012EB85A97C";
-    private static final long JWT_VALIDITY = TimeUnit.MINUTES.toMillis(1);
+    private static final long JWT_VALIDITY = TimeUnit.MINUTES.toMillis(10);
 
 
     public String generateToken (UserDetails userDetails) {
@@ -38,6 +39,25 @@ public class JwtService {
     private SecretKey generateKey () {
         byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(decodedKey);
+    }
+
+    public String extractUsername(String jwt) {
+        Claims claims = getClaims(jwt);
+        return claims.getSubject();
+
+    }
+
+    public Claims getClaims (String jwt) {
+        return Jwts.parser()
+                .verifyWith(generateKey())
+                .build()
+                .parseSignedClaims(jwt)
+                .getPayload();
+    }
+
+    public boolean isTokenValid (String jwt) {
+        Claims claims = getClaims(jwt);
+        return claims.getExpiration().after(Date.from(Instant.now()));
     }
 }
 

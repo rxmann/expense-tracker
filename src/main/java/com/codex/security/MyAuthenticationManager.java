@@ -11,10 +11,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class AppAuthentication {
+public class MyAuthenticationManager {
 
     @Autowired
     private MyUserDetailsService userDetailsService;
+
+    @Bean
+    public AuthenticationManager authenticationManager () {
+        return new ProviderManager(authenticationProvider());
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -22,11 +27,6 @@ public class AppAuthentication {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager () {
-        return new ProviderManager(authenticationProvider());
     }
 
     @Bean

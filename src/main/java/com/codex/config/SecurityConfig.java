@@ -27,13 +27,13 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/api/v1/register/user", "/api/v1/authenticate", "/api/v1/auth").permitAll()
-//                        .requestMatchers("/api/v1/users", "/api/v1/categories", "/api/v1/expenses", "/profile")
-//                        .requestMatchers("/api/v1/users/**", "/api/v1/categories/**", "/api/v1/expenses/**")
+                        .requestMatchers("/api/v1/register/user", "/api/v1/authenticate").permitAll()
                         .anyRequest().authenticated())
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2Login -> {
+                    oauth2Login.successHandler((request, response, authentication) -> {
+                        response.sendRedirect("/profile");
+                    });
+                })
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
 
         return http.build();

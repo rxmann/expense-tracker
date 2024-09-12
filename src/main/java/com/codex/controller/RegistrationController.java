@@ -13,6 +13,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+=======
+import java.security.Principal;
+
+>>>>>>> oauth2.0
 
 @RestController
 @RequestMapping("/api/v1")
@@ -29,6 +34,12 @@ public class RegistrationController {
 
     @PostMapping("/register/user")
     public UserDTO registerUser (@RequestBody User user) {
+<<<<<<< HEAD
+=======
+        if (user.getRole() == null) {
+            user.setRole("USER");
+        }
+>>>>>>> oauth2.0
         return service.registerUser(user);
     }
 
@@ -47,4 +58,12 @@ public class RegistrationController {
         }
     }
 
+<<<<<<< HEAD
+=======
+    @RequestMapping("/auth")
+    public Principal user (Principal user) {
+        return user;
+    }
+
+>>>>>>> oauth2.0
 }

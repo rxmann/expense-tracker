@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Info</title>
+    <style>
+        .card {
+            width: 300px;
+            padding: 20px;
+            margin: auto;
+            text-align: center;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <img th:src="@{${photo}}" alt="User Photo">
+    <h2 th:text="${name}">Name</h2>
+    <p th:text="${email}">Email</p>
+</div>
+</body>
+</html>

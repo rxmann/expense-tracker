@@ -35,15 +35,10 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     private String[] getRoles(String role) {
-<<<<<<< HEAD
         if (role == null || role.isEmpty() || role.equalsIgnoreCase("USER")) {
             return new String[]{"USER"};
         }
         else if (role.contains("ADMIN")) {
-=======
-
-        if (role.contains("ADMIN")) {
->>>>>>> oauth2.0
             return new String[]{"USER", "ADMIN"};
         }
         return new String[]{"USER"};
